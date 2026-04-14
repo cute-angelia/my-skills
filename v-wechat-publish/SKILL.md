@@ -1,5 +1,5 @@
 ---
-name: wechat-publish
+name: v-wechat-publish
 description: 微信公众号完整发布流程。引导用户提供标题、封面和正文，对正文进行内容补充优化 → humanizer-zh 去AI痕迹 → wechat-article-formatter 格式化发布 → 飞书自定义机器人 Webhook 通知完成。触发场景：用户说「发布公众号」「微信公众号发布」「发布到微信」「发布文章到公众号」。
 ---
 
