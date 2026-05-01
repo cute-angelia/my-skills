@@ -10,15 +10,16 @@ description: 微信公众号完整发布流程。引导用户提供标题、封�
 本 skill 串联以下技能，形成一键发布流水线：
 
 1. **内容补充** — 对用户提供的初稿进行内容丰富和优化
-2. **humanizer-zh** — 去除 AI 写作痕迹，使文字更自然
-3. **wechat-article-formatter** — bm.md 渲染 + 微信官方 API 发布
-4. **飞书自定义机器人** — 发布完成后 Webhook 通知
+2. **khazix-writer** — 生成符合微信公众号要求的优化后文章
+3. **humanizer-zh** — 去除 AI 写作痕迹，使文字更自然
+4. **wechat-article-formatter** — bm.md 渲染 + 微信官方 API 发布
+5. **飞书自定义机器人** — 发布完成后 Webhook 通知
 
 ## 执行流程
 
 ```
 Step 0  → 收集素材（标题 + 封面 + 正文）
-Step 1  → 内容补充优化
+Step 1  → 内容补充优化 → khazix-writer 优化文章
 Step 2  → humanizer-zh 去AI痕迹
 Step 3  → wechat-article-formatter 发布
 Step 4  → 飞书自定义机器人通知
