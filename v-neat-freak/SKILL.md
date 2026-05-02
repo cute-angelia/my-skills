@@ -1,160 +1,299 @@
 ---
-name: neat-freak
+name: v-neat-freak
 description: >
-  End-of-session knowledge cleanup with OCD-level rigor — reconciles project docs
-  (CLAUDE.md, README.md, docs/) and agent memory against the code so nothing rots.
-  会话结束后对项目文档和记忆进行洁癖级审查与同步。MUST trigger when the user says:
-  "sync up", "tidy up docs", "update memory", "clean up docs", "/sync", "/neat", "同步一下",
-  "整理文档", "整理一下", "更新记忆", "梳理一下", "收尾", "这个阶段做完了",
-  "新人能直接上手", or any phrase suggesting a dev milestone where knowledge needs
-  reconciliation. Also trigger when the user reports stale docs, conflicting memories,
-  or wants a clean handoff to teammates or other agents. Bare "整理" / "tidy" with
-  prior dev context counts — do not under-trigger. Cross-platform: works on Claude Code,
-  OpenAI Codex, OpenCode, and OpenClaw.
+  End-of-session knowledge cleanup with editor-level rigor. Use when the user asks
+  to sync docs, tidy knowledge, update memory, do handoff cleanup, or when a dev
+  milestone changed code/docs and the knowledge base may have drifted. Cross-agent:
+  works for Hermes, Claude Code, Codex, OpenCode, and OpenClaw. Focus on reconciling
+  durable memory, project instructions (CLAUDE.md / AGENTS.md / equivalents), README,
+  and docs/ against the real codebase so future humans and agents inherit clean,
+  current knowledge instead of stale notes.
 ---
 
-# 洁癖 — Knowledge Base Neat-Freak
+# v-neat-freak
 
-> **Cross-platform Agent Skill** — Claude Code · OpenAI Codex · OpenCode · OpenClaw 通用。
-> 跨平台 SKILL.md，遵循开放 Agent Skill 规范。
+你不是记录员，你是知识库编辑。
 
-你是一个**知识库编辑**，不是记录员。记录员只会往后追加，编辑会审查全局、合并重复、修正过期、删除废弃。你的工作是让整个项目的知识体系始终保持**干净、准确、对新人友好**的状态——像有洁癖一样。
+记录员只会往后追加；编辑会盘点全局、发现漂移、合并重复、修正过期、删除废弃，并把不同受众该看的那一层知识同步好。这个 skill 的目标不是“留痕”，而是让项目知识体系始终干净、准确、可接手。
 
-## 为什么这件事重要
+适用平台：
+- Hermes
+- Claude Code
+- OpenAI Codex
+- OpenCode
+- OpenClaw
+- 其他支持 `SKILL.md` 的 agent（按本文的“平台映射”做等价替换）
 
-在 AI 协作开发中，代码可以随时重写，但**文档和记忆是跨会话、跨 Agent 的唯一桥梁**。如果记忆里有过期信息，下一个 Agent（无论它是 Claude、Codex 还是别的）会基于错误前提做决策。如果 docs/ 混乱或缺失，接手者（尤其是下游项目的同事）会浪费大量时间搞清楚这套系统怎么用。
+如果当前 agent 没有独立记忆系统，也照样可用：把重点放在项目根 markdown、README 和 docs/。
 
-这个 Skill 的价值就在于：**让知识体系的每一层都跟得上代码的变化。**
+## 何时触发
 
-## 关键概念：三类知识，三种受众
+出现以下任一类意图时触发：
 
-**必须先理解这件事，否则你会只改 CLAUDE.md 就结束，把下游同事和其他 agent 晾在那儿。**
+1. 用户显式要求同步 / 收尾 / 整理
+- “sync up”
+- “tidy up docs”
+- “update memory”
+- “clean up docs”
+- “/sync”
+- “/neat”
+- “同步一下”
+- “整理文档”
+- “整理一下”
+- “更新记忆”
+- “梳理一下”
+- “收尾”
+- “这个阶段做完了”
+- “新人能直接上手”
 
-| 位置 | 受众 | 职责 | 不同步的代价 |
-|------|------|------|--------------|
-| **Agent 记忆系统**（若 agent 支持） | Agent 自己跨会话复用 | 个人偏好、非显而易见的项目事实、跨项目 reference | 下次会话 Agent 忘记历史决策 |
-| 项目根 `CLAUDE.md` / `AGENTS.md` | 当前项目里的 AI（下次会话自己） | 项目约定、结构、红线、环境变量、路由清单 | 下次 AI 在这个项目里走弯路 |
-| 项目 `docs/` + `README.md` | **其他人**（人类同事、下游开发者、未来接手的 AI） | 接入指南、架构图、运维手册、交接说明、API 参考 | **其他人或系统无法正确接入或运维** |
+2. 用户指出知识漂移
+- 文档过期
+- memory/记忆矛盾
+- README 跟代码不一致
+- 接手人看不懂怎么启动/接入/运维
 
-这三层**受众不同，职责不重叠**。CLAUDE.md 里写"新增了 device flow 五个路由" ≠ docs/integration-guide.md 里"下游怎么接这套 flow" —— 前者是提醒自己，后者是教别人。**两份都要写。**
+3. 会话虽然没明确说“整理”，但已经发生明显里程碑
+- 新增 API / 路由 / CLI 命令
+- 新增或改名环境变量
+- 引入新目录结构、工作流、状态文件
+- 影响到上下游项目的对接方式
+- 适合做 handoff、发版前清理、阶段性交接
 
-> **Agent 记忆系统的具体位置因平台而异**（Claude Code 在 `~/.claude/projects/<...>/memory/`，Codex 用 `AGENTS.md`，OpenCode 用 `.opencode/`，OpenClaw 用 `~/.openclaw/`）。完整路径速查见 [references/agent-paths.md](references/agent-paths.md)。如果当前 agent 没有独立的记忆系统，直接跳过这一层，把功夫全花在 docs 和项目根 markdown 上。
+触发原则：宁可略微早触发，也不要漏掉阶段收尾。
+
+## 三层知识模型：先分受众，再决定改哪里
+
+| 层级 | 受众 | 典型载体 | 职责 |
+|---|---|---|---|
+| Agent 记忆层 | 当前 agent 自己跨会话复用 | Hermes memory、Claude memory、其他平台记忆机制 | 用户偏好、非显而易见的稳定事实、跨会话提醒 |
+| 项目指令层 | 下次进入该项目的 agent | `CLAUDE.md` / `AGENTS.md` / 平台等价文件 | 项目约定、红线、目录结构、命令入口、环境假设 |
+| 公共文档层 | 人类同事、下游系统、未来接手者 | `README.md`、`docs/*.md`、handoff/runbook | 如何安装、接入、运维、理解系统 |
+
+三层受众不同，不互相替代。
+
+例子：
+- “新增了 5 个 device flow 路由”
+  - 不是只改 `CLAUDE.md` 就结束
+  - 还要看 `README.md` / `docs/integration-guide.md` / `docs/architecture.md` 是否也该改
+- “用户偏好中文、要求严筛盘前票”
+  - 适合 Hermes memory 或等价记忆层
+  - 不该塞进项目 README
+
+## 平台映射
+
+### Hermes
+- 记忆层：优先用 `memory` 工具维护 durable facts
+- 项目指令层：项目里的 `CLAUDE.md` / `AGENTS.md` / 等价 markdown
+- 文档层：`README.md`、`docs/`、handoff 文档
+- 检查/修改：优先用 `read_file`、`search_files`、`patch`、`write_file`
+- 验证：必要时用 `terminal` 做 `git status`、测试、路径校验
+
+### Claude Code
+- 记忆层：`~/.claude/projects/<...>/memory/`
+- 项目指令层：项目根 `CLAUDE.md`
+- 文档层：`README.md`、`docs/`
+
+### OpenAI Codex
+- 记忆层：通常没有独立 memory 文件；跨会话项目知识主要落在 `AGENTS.md`
+- 项目指令层：项目根 `AGENTS.md` / `AGENTS.override.md`
+- 文档层：`README.md`、`docs/`
+
+### OpenCode
+- 可能同时扫描 `.opencode/`、`.claude/`、`.codex/`
+- 依旧按“三层知识”做，不要因为目录多就把受众混在一起
+
+### OpenClaw
+- 没有强依赖独立 memory 文件时，优先同步项目根 markdown 与 docs
+- 若平台支持 workspace/project/user 多层 skill 与配置，仍然遵守“读者分层”原则
 
 ## 执行流程
 
-### 第一步：盘点现状（强制机械式枚举，不能跳过）
+### 第一步：强制盘点，不能跳
 
-**先做 ls，再做判断。**
+先枚举，再判断。不要凭印象说“这项目应该只有 README 和 docs”。
 
-1. 列出 agent 的记忆文件（如有）：
-   - Claude Code：`ls ~/.claude/projects/<...>/memory/` 并读 `MEMORY.md` 及所有被引用的 `.md`
-   - Codex / OpenCode / 其他：找该 agent 的等价位置（见 references/agent-paths.md）
-2. 对本次对话涉及的**每一个项目**：
-   - `ls <project-root>/` → 确认根目录结构
-   - `ls <project-root>/docs/ 2>/dev/null` → **枚举所有 docs**（缺失也要确认）
-   - `find <project-root> -maxdepth 2 -name "*.md" -not -path "*/node_modules/*" -not -path "*/.git/*"` → 兜底抓散落的 .md
-   - 读 `README.md`、`CLAUDE.md` / `AGENTS.md`、每一个 `docs/*.md`
-3. 读全局 agent 配置（若有，如 `~/.claude/CLAUDE.md`、`~/.codex/AGENTS.md`）
-4. 回顾本次对话全部内容
+对每个本次会话涉及的项目，至少做这些事：
 
-**输出一张文件清单**（内部用，不用给用户看），对每个文件标：「评估过 / 要改 / 不用改」。**漏一个不行**——这是这个 skill 最容易翻车的地方。
+1. 枚举项目根目录
+2. 枚举 `docs/`（即使不存在，也要确认不存在）
+3. 搜索散落在根目录或二级目录里的 markdown
+4. 读取这些文件中与项目知识相关的候选项：
+   - `README.md`
+   - `CLAUDE.md`
+   - `AGENTS.md`
+   - `TEAM_GUIDE.md`
+   - `docs/*.md`
+   - 其他承担 handoff / runbook / architecture / integration 的 markdown
+5. 检查平台级知识位置（按当前 agent 选）
+   - Hermes：查看是否需要改 memory；必要时回顾已有 memory 注入内容
+   - Claude Code / Codex / OpenCode / OpenClaw：读等价的项目指令与记忆文件
+6. 回顾本次对话与本次代码变更
 
-### 第二步：识别变更——用"变更影响矩阵"思考
+必须在脑中形成一张“文件清单”：
+- 已评估
+- 要改
+- 明确不用改
 
-**不要只看对话增量有什么新事实，要看新事实会波及哪些文档层级。**
+漏掉一个关键文档，就是这个 skill 最常见的失败模式。
 
-常见模式速览：
-- 新增 API / 路由 → CLAUDE.md 路由清单 + integration-guide + architecture 的 Routes
-- 新增 / 改名 环境变量 → CLAUDE.md 环境变量表 + runbook + 下游 integration-guide
-- 新增数据库表 → CLAUDE.md + architecture 的 Data Model
-- 新增大特性（跨多文件） → 以上全部 + architecture 新章节 + handoff 已完成清单
-- 跨项目改动 → 上下游两边的 docs **都要对齐**（最常见的漏改场景）
-- 记忆层面：相对时间→绝对日期、过期事实→改、重复→合并、已完成待办→删
+### 第二步：建立“变更影响矩阵”
 
-完整映射表（覆盖更多变更类型与对应文档）见 **[references/sync-matrix.md](references/sync-matrix.md)**——遇到不确定的改动先查这张表。
+不要只问“新增了什么事实”，而要问：
+“这条事实会影响哪几层知识、哪几类读者？”
 
-**关键检查**：这次对话是不是**跨项目**的？如果改了项目 A 且项目 B 依赖它（通过 SDK、API、子域、环境变量），**项目 B 的 docs 也要改**。这是历次同步最常翻的车。
+常见映射：
+- 新增 API / 路由
+  - 项目指令层路由说明
+  - `docs/integration-guide.md`
+  - `docs/architecture.md`
+- 新增 / 改名环境变量
+  - 项目指令层环境变量表
+  - `docs/operator-runbook.md`
+  - 接入文档（若下游也要配置）
+- 新增数据库表 / 状态文件 / 目录结构
+  - 项目指令层结构说明
+  - `docs/architecture.md`
+  - 必要时 README 启动步骤
+- 新增大特性
+  - integration-guide
+  - architecture
+  - runbook
+  - handoff / changelog
+- 跨项目改动
+  - 上游项目文档和下游项目接入文档都要改
 
-### 第三步：实际修改（用工具，不只是描述）
+参考表见：
+- `references/sync-matrix.md`
 
-你必须**真的用 Edit 修改现有文件、用 Write 创建新文件、用删除命令清理废弃文件**。"我会怎么改"的描述不算完成。
+### 第三步：实际修改，不接受“口头计划”
 
-**顺序建议**：先改 docs/（改错影响外部）→ 再改 CLAUDE.md/AGENTS.md → 最后理记忆。先动外部优先级最高的，即使中途被打断，读者看到的也是对齐的最新状态。
+必须真的改文件或记忆，不能停留在“建议这样改”。
 
-**编辑原则**：
+推荐顺序：
+1. 先改 docs / README（影响外部读者最大）
+2. 再改项目指令层（CLAUDE.md / AGENTS.md / 等价文件）
+3. 最后理 agent 记忆层
 
-- **合并优于追加**：新信息是对旧信息的更新，改旧条目，不要再加一条
-- **删除优于保留**：完成的临时计划、推翻的决策、过期的上下文，删掉
-- **精确优于冗长**：一条记忆说清楚一件事，别塞三件
-- **绝对时间**：永远 `2026-04-29`，不写"今天"、"最近"
-- **面向读者**：docs/ 的读者是"第一次接触这个项目的外部人"，写的时候想象对方只有 5 分钟能看完
-- **受众不混**：CLAUDE.md 里不抄 docs/ 的全文，docs/ 里不写"我记得上次……"——这是记忆的事
+为什么这个顺序更稳：
+- 就算中途被打断，最外层读者先看到的是最新文档
+- memory 最灵活，应该最后收口，不应替代正式文档
 
-**全局配置极度克制**：`~/.claude/CLAUDE.md` / `~/.codex/AGENTS.md` 只有用户在对话中明确表达了**跨项目的核心原则**才动。日常项目细节绝不进全局。
+编辑原则：
+- 合并优于追加
+- 删除优于保留
+- 精确优于冗长
+- 绝对时间优于相对时间
+- 面向对应受众写作，不要跨层污染
+- 只把 durable facts 写进记忆层，不把临时任务状态塞进去
 
-**docs/ 编辑要点**——新增一个能力的文档变更通常要四处都补：
-1. **integration-guide** 或对应"外部视角"文档：加**怎么用**（curl / SDK 示例 / 错误码表）
-2. **architecture**：加**怎么工作**（数据流、状态机、设计取舍）
-3. **runbook**：加**怎么运维**（冒烟命令、故障排查、环境变量）
-4. **handoff** 或 CHANGELOG：加**已完成**
+### 第四步：按平台落地
 
-API 速查表、环境变量表、术语表是高频查询的结构化信息，**必须保持"所见即最新"**。
+#### 在 Hermes 里
+- 读文件：`read_file` / `search_files`
+- 改文件：`patch` / `write_file`
+- 改记忆：`memory`
+- 校验：`terminal` 看 `git status`、路径、测试或命令输出
+- 如果工作量大，可用 `todo` 管理收尾 checklist
 
-### 第四步：自检清单（必须逐项过一遍）
+Hermes 专属硬规则：
+- 用户偏好、稳定环境事实、长期约定 → `memory`
+- 会话进度、一次性任务结果、临时 TODO → 不进 `memory`
+- 如果你说“我会同步/检查/修改”，必须立刻真的调用工具
 
-这一步防止"漏改 docs"。改完后逐条检查：
+#### 在其他 agent 里
+采用等价能力：
+- Read / Search / Edit / Write / Memory API / shell
+- 如果没有 memory，就把精力集中到项目指令层和公共文档层
 
-- [ ] 第一步列出的每个文件，都判断了"不用改"或"已改"
-- [ ] 记忆索引（若有）里的每个链接指向存在的文件
-- [ ] 每个记忆文件的 description 和内容对得上
-- [ ] 记忆之间没有互相矛盾
-- [ ] CLAUDE.md / AGENTS.md 里提到的路径 / 命令 / 工具 / 环境变量在代码中真实存在
-- [ ] README 的安装 / 运行步骤跟代码一致
-- [ ] 新增 API 路由：**在 integration-guide 和 architecture 都出现了**
-- [ ] 新增环境变量：**在 runbook 和项目根 markdown 都出现了**
-- [ ] 新增数据库表：**在 architecture 的 Data Model 和项目根 markdown 都出现了**
-- [ ] 跨项目影响：下游项目的 docs 也跟着改了
-- [ ] 没有相对时间遗留（`grep -E "今天|昨天|刚刚|最近|上周|today|yesterday|recently"` 清零）
+### 第五步：自检清单
 
-哪条打不了勾，**回去补**。不要因为"差不多了"就跳过这一步——这是这个 skill 的灵魂。
+逐项过，不要偷懒：
 
-### 第五步：变更摘要
+- [ ] 第一步枚举到的每个关键文件都已经判断“已改”或“无需改”
+- [ ] README 的安装 / 运行 / 接入步骤与代码一致
+- [ ] 项目指令层提到的路径、命令、环境变量在仓库里真实存在
+- [ ] 新增 API / 路由时，integration-guide 与 architecture 都同步了
+- [ ] 新增环境变量时，runbook 与项目指令层都同步了
+- [ ] 新增结构化状态文件 / 数据模型时，architecture 与项目指令层都同步了
+- [ ] 跨项目影响已检查，不只改上游不改下游
+- [ ] 没有残留“今天 / 最近 / yesterday / recently”这类相对时间
+- [ ] 记忆层（若有）没有重复、矛盾、一次性临时信息
 
-在所有文件修改完之后（不是之前），给用户简洁摘要：
+### 第六步：输出变更摘要
 
+改完之后再总结，不要先总结后执行。
+
+建议格式：
+
+```text
+同步完成
+
+记忆变更
+- 更新：...
+- 新增：...
+- 删除：...
+
+文档变更
+- <项目>/README.md — ...
+- <项目>/CLAUDE.md — ...
+- <项目>/docs/architecture.md — ...
+
+未处理
+- ...（只有确实需要用户拍板时才写）
 ```
-## 同步完成
 
-### 记忆变更
-- 更新：xxx（原因）
-- 新增：xxx
-- 删除：xxx（原因）
-
-### 文档变更（按项目分组，每个项目列全改动的文件）
-- <项目 A>/CLAUDE.md — xxx
-- <项目 A>/docs/integration-guide.md — xxx
-- <项目 A>/docs/architecture.md — xxx
-- <项目 B>/docs/<integration>.md — xxx
-
-### 未处理
-- xxx（为什么没处理，比如需要用户确认）
-```
-
-只列有实际变更的条目。没改的不写。
+只列有实际变更的项；没改的不写。
 
 ## 特殊情况
 
-**项目还没有 README 或 CLAUDE.md/AGENTS.md**：判断项目是不是到了"有可运行代码"的阶段。是 → 创建。还在 vibe 阶段 → 跳过，但在摘要里提一句。
+### 1. 对话没有新增事实
+也要做审查。
 
-**对话没有产生新事实**：审查现有记忆和文档有没有过期 / 冲突 / 相对时间——审查本身就有价值。
+如果发现文档本来就过期、矛盾、含糊、还在用相对时间，照样应该修。这个 skill 的价值不只在“新增”，也在“清污”。
 
-**记忆之间出现无法自动判断的矛盾**：列在「未处理」让用户决定。**这是唯一需要用户介入的情况**，其他都自己拍板。
+### 2. 项目还没有 README / CLAUDE.md / AGENTS.md
+判断项目成熟度：
+- 已有可运行代码或可接手工作流：应补最小可用文档
+- 还只是 vibe / 草稿阶段：可以暂缓，但要在摘要说明
 
-**跨项目改动**：本次对话改了多个项目，每个项目都要跑一次完整的第一步（ls + 读 docs）。不要假设一个项目的 docs 改了，另一个就不用。尤其是上游-下游对接文档（集成指南 / SDK 说明 / API 协议），两边都要对齐。
+### 3. 记忆冲突无法自动裁决
+这是少数需要用户介入的情况。
 
-**发现之前的同步漏了东西**：修掉。不要说"那不是这次对话的事"——你就是这个项目的持续编辑，过去的漏洞也归你管。
+例如：
+- 两条长期偏好互相打架
+- 两个项目事实无法从代码或对话验证
+
+除此之外，优先自己拍板，不要把一般性的整理工作甩回给用户。
+
+### 4. 跨项目会话
+本次会话如果碰了多个仓库，就对每个仓库独立跑一次“盘点 → 影响矩阵 → 修改 → 自检”。
+
+最容易漏改的是：
+- 上游 API 变了，但下游接入文档没改
+- 共享环境变量变了，但 consumer 项目 setup 文档没改
+- CLI 行为变了，但 README 仍是旧命令
+
+## 完成标准
+
+只有同时满足以下条件，才算真的完成：
+
+1. 代码事实、项目指令、公共文档、agent 记忆之间没有明显漂移
+2. 受众分层清晰，没有把 memory、项目约定、外部文档混成一锅
+3. 至少做过一次实际修改或一次明确的“全量核查后确认无需修改”
+4. 给用户的摘要能说明改了什么、为什么改、还有什么未决项
+
+## 反模式
+
+不要这样做：
+- 只改 `CLAUDE.md` / `AGENTS.md` 就说“同步完成”
+- 只往后追加，不清理过期信息
+- 把一次性任务状态写进长期 memory
+- 把用户偏好塞进 README
+- 把 README 当成给 agent 自己看的内部提示本
+- 发现跨项目影响却只改当前仓库
+- 只口头建议，不实际动手
 
 ## 参考资料
 
-- **[references/sync-matrix.md](references/sync-matrix.md)** — 完整的"变更类型 → 要改哪些文件"映射表
-- **[references/agent-paths.md](references/agent-paths.md)** — Claude Code / Codex / OpenCode 各自的记忆与配置路径速查
+- `references/sync-matrix.md` — 变更类型到文档层的映射
+- `references/agent-paths.md` — 各 agent 的记忆/配置/skill 路径速查

@@ -2,6 +2,21 @@
 
 不同 agent 平台的记忆系统和项目配置文件位置不一样。执行第一步盘点时按你正在使用的平台查这张表。
 
+## Hermes
+
+| 用途 | 位置 |
+|---|---|
+| 跨会话记忆 | Hermes `memory` 工具（持久化存储，不是仓库里的固定文件） |
+| 用户画像 | Hermes `memory(target='user')` |
+| 环境/项目稳定事实 | Hermes `memory(target='memory')` |
+| 项目级指令 | 项目根 `CLAUDE.md` / `AGENTS.md` / 等价 markdown |
+| Skills 目录 | `~/.hermes/skills/`（Hermes 自身技能库）；也可维护外部技能仓库后按平台需要链接 |
+
+Hermes 的关键点：
+- durable facts 通过 `memory` 工具管理，不是手改某个 `MEMORY.md`
+- 会话进度、一次性结果、临时 TODO 不该写进 memory
+- 项目知识仍然主要落在 `README.md`、`docs/`、`CLAUDE.md` / `AGENTS.md`
+
 ## Claude Code
 
 | 用途 | 路径 |
@@ -23,7 +38,7 @@
 | 项目级 override | `AGENTS.override.md`(若存在,覆盖同目录 AGENTS.md) |
 | Skills 目录 | `~/.codex/skills/<name>/SKILL.md` 或项目内 `.codex/skills/<name>/` |
 
-Codex 没有独立的"记忆文件 + 索引"机制,所有跨会话信息都直接写在 `AGENTS.md` 里。同步时把"项目事实"那部分内容统一放 AGENTS.md。
+Codex 没有独立的“记忆文件 + 索引”机制，所有跨会话信息都直接写在 `AGENTS.md` 里。同步时把“项目事实”那部分内容统一放 AGENTS.md。
 
 发现项目里有 `TEAM_GUIDE.md` 或 `.agents.md` 也要看——这是 Codex 的 fallback 文件名。
 
@@ -35,9 +50,9 @@ Codex 没有独立的"记忆文件 + 索引"机制,所有跨会话信息都直�
 | 项目级 skills | `.openclaw/skills/<name>/SKILL.md`（仓库根目录下） |
 | Workspace skills | 当前 workspace 的 `skills/` 目录 |
 
-**加载优先级**：workspace > project-agent > personal-agent > managed/local > bundled > extra dirs。同名 skill 高优先级覆盖低优先级。
+加载优先级：workspace > project-agent > personal-agent > managed/local > bundled > extra dirs。同名 skill 高优先级覆盖低优先级。
 
-OpenClaw 没有独立的"记忆文件 + 索引"机制，跨会话信息可放在项目根的 markdown（CLAUDE.md / AGENTS.md / 等价文件）里，参照 Codex 的做法。frontmatter 支持 `metadata.openclaw` 字段做加载时的 gating（按 OS、环境变量、二进制依赖筛选），但不是 neat-freak 必需的。
+OpenClaw 没有独立的“记忆文件 + 索引”机制，跨会话信息可放在项目根的 markdown（CLAUDE.md / AGENTS.md / 等价文件）里，参照 Codex 的做法。frontmatter 支持 `metadata.openclaw` 字段做加载时的 gating（按 OS、环境变量、二进制依赖筛选），但不是 neat-freak 必需的。
 
 ## OpenCode
 
@@ -48,21 +63,22 @@ OpenClaw 没有独立的"记忆文件 + 索引"机制，跨会话信息可放在
 | Skills 目录(项目) | `.opencode/skills/`、`.claude/skills/`、`.codex/skills/` 都会被扫描 |
 | Skills 目录(全局) | `~/.config/opencode/skills/`、`~/.claude/skills/`、`~/.codex/skills/` |
 
-OpenCode 同时读取 Claude Code 和 Codex 的目录,所以同一个 skill 装在 `~/.claude/skills/` 下的话三家都能识别。OpenClaw 走自己的 `~/.openclaw/skills/`，需要单独装一份（或用符号链接）。
+OpenCode 同时读取 Claude Code 和 Codex 的目录，所以同一个 skill 装在 `~/.claude/skills/` 下的话三家都能识别。OpenClaw 走自己的 `~/.openclaw/skills/`，需要单独装一份（或用符号链接）。
 
 ## 如果当前 agent 没有独立记忆系统
 
-跳过"记忆"那一层,把功夫全花在:
-- 项目根 markdown(CLAUDE.md / AGENTS.md / 本平台等价文件)
-- README.md
-- docs/
+跳过“记忆”那一层，把功夫全花在：
+- 项目根 markdown（`CLAUDE.md` / `AGENTS.md` / 本平台等价文件）
+- `README.md`
+- `docs/`
 
-仍然是有效的同步——记忆是锦上添花,docs 才是项目知识的最低保障。
+仍然是有效的同步——记忆是锦上添花，docs 才是项目知识的最低保障。
 
 ## 跨平台共存策略
 
-如果一个项目同时被 Claude Code 用户和 Codex 用户使用,推荐:
+如果一个项目同时被 Claude Code 用户、Codex 用户和 Hermes 用户使用，推荐：
 
-- **项目根同时放 `CLAUDE.md` 和 `AGENTS.md`**,内容可以互相 symlink 或在两边维护
-- 或者一份内容主文件 + 另一份用一行 `See CLAUDE.md` 跳转
-- docs/ 和 README 是平台中立的,不需要分两份
+- 项目根至少有一份稳定的项目指令文件：`CLAUDE.md` 或 `AGENTS.md`
+- 最稳妥是项目根同时放 `CLAUDE.md` 和 `AGENTS.md`，内容互相同步或做跳转
+- `README.md` 和 `docs/` 保持平台中立，不要写成某一家 agent 私有提示
+- 用户偏好和长期非显而易见事实，优先留在各平台自己的记忆系统里
