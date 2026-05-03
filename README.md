@@ -29,8 +29,8 @@
   - 适合在阶段开发完成后，系统整理 memory、CLAUDE/AGENTS、README、docs 与 handoff 文档，确保对人和对 agent 都不漂移
 
 - `v-novel-anti-ai`
-  - 小说反 AI 精修技能
-  - 适合对章节正文、场景段落、人设表达做去 AI 味、去模板化、去解释腔处理
+  - 小说反 AI 审查技能
+  - 适合对章节正文、场景段落、人设表达做去 AI 味、去模板化、去解释腔审查；默认先给审查报告，由用户决定是否实改
 
 - `v-novel-build`
   - novelOs 三项目分流选择技能
@@ -139,6 +139,9 @@ cp -R /Users/vanilla/git/github/cute-angelia/my-skills/v-neat-freak ~/.agents/sk
 - `~/.agents/skills/v-novel-multi-role-review`
 - `~/.agents/skills/v-stock-analysis`
 - `~/.agents/skills/v-wechat-publish`
+- `~/.claude/skills/v-neat-freak`
+- `~/.codex/skills/v-neat-freak`
+- `~/.hermes/skills/software-development/v-neat-freak`
 
 它们都指向本仓库对应目录。
 
