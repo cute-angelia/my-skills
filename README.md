@@ -36,6 +36,14 @@
   - novelOs 三项目分流选择技能
   - 适合在 open-novel-writing、novel-pro、webnovel-writer 之间快速选型并进入正确工作流
 
+- `v-novel-chaiwen`
+  - 长篇样文/小说章节结构化拆文 skill
+  - 适合按章节连续拆解样本文，稳定输出每章功能、麻烦链、伏笔、地图与可迁移机制，并默认自动续拆不等待“继续”
+
+- `v-novel-write-shuangwen`
+  - 番茄爽文正文直出 skill
+  - 适合按“番茄连载口感”直接写爽文开篇、续写、改写、扩写与章节正文
+
 - `v-novel-multi-role-review`
   - 多角色网文审查 skill
   - 适合用多个创作/读者/商业化视角联合审查章节、大纲或片段
@@ -72,6 +80,11 @@ my-skills/
 │   └── SKILL.md
 ├── v-novel-build/
 │   └── SKILL.md
+├── v-novel-chaiwen/
+│   └── SKILL.md
+├── v-novel-write-shuangwen/
+│   ├── SKILL.md
+│   └── references/
 ├── v-novel-multi-role-review/
 │   └── SKILL.md
 ├── v-stock-analysis/
@@ -96,6 +109,8 @@ ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-khazix-writer ~/.agents
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-neat-freak ~/.agents/skills/v-neat-freak
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-anti-ai ~/.agents/skills/v-novel-anti-ai
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-build ~/.agents/skills/v-novel-build
+ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-chaiwen ~/.agents/skills/v-novel-chaiwen
+ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-write-shuangwen ~/.agents/skills/v-novel-write-shuangwen
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-multi-role-review ~/.agents/skills/v-novel-multi-role-review
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-stock-analysis ~/.agents/skills/v-stock-analysis
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-wechat-article-formatter-skill ~/.agents/skills/v-wechat-article-formatter-skill
@@ -111,6 +126,8 @@ rm -rf ~/.agents/skills/v-khazix-writer
 rm -rf ~/.agents/skills/v-neat-freak
 rm -rf ~/.agents/skills/v-novel-anti-ai
 rm -rf ~/.agents/skills/v-novel-build
+rm -rf ~/.agents/skills/v-novel-chaiwen
+rm -rf ~/.agents/skills/v-novel-write-shuangwen
 rm -rf ~/.agents/skills/v-novel-multi-role-review
 rm -rf ~/.agents/skills/v-stock-analysis
 rm -rf ~/.agents/skills/v-wechat-article-formatter-skill
@@ -136,6 +153,8 @@ cp -R /Users/vanilla/git/github/cute-angelia/my-skills/v-neat-freak ~/.agents/sk
 - `~/.agents/skills/v-neat-freak`
 - `~/.agents/skills/v-novel-anti-ai`
 - `~/.agents/skills/v-novel-build`
+- `~/.agents/skills/v-novel-chaiwen`
+- `~/.agents/skills/v-novel-write-shuangwen`
 - `~/.agents/skills/v-novel-multi-role-review`
 - `~/.agents/skills/v-stock-analysis`
 - `~/.agents/skills/v-wechat-publish`
