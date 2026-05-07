@@ -81,7 +81,8 @@ my-skills/
 ├── v-novel-build/
 │   └── SKILL.md
 ├── v-novel-chaiwen/
-│   └── SKILL.md
+│   ├── SKILL.md
+│   └── chaiwen/
 ├── v-novel-write-shuangwen/
 │   ├── SKILL.md
 │   └── references/
