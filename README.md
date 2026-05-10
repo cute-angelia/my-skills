@@ -40,6 +40,10 @@
   - 长篇样文/小说章节结构化拆文 skill
   - 适合按章节连续拆解样本文，稳定输出每章功能、麻烦链、伏笔、地图与可迁移机制，并默认自动续拆不等待“继续”
 
+- `v-novel-round-table`
+  - 网文拆文后圆桌会策划 skill
+  - 适合让番茄爽文读者、毒舌读者、番茄金番小说家、起点白金作家等角色讨论拆文成果、避撞车并缝合生成新小说大纲
+
 - `v-novel-write-shuangwen`
   - 番茄爽文正文直出 skill
   - 适合按“番茄连载口感”直接写爽文开篇、续写、改写、扩写与章节正文
@@ -83,6 +87,8 @@ my-skills/
 ├── v-novel-chaiwen/
 │   ├── SKILL.md
 │   └── chaiwen/
+├── v-novel-round-table/
+│   └── SKILL.md
 ├── v-novel-write-shuangwen/
 │   ├── SKILL.md
 │   └── references/
@@ -111,6 +117,7 @@ ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-neat-freak ~/.agents/sk
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-anti-ai ~/.agents/skills/v-novel-anti-ai
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-build ~/.agents/skills/v-novel-build
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-chaiwen ~/.agents/skills/v-novel-chaiwen
+ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-round-table ~/.agents/skills/v-novel-round-table
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-write-shuangwen ~/.agents/skills/v-novel-write-shuangwen
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-multi-role-review ~/.agents/skills/v-novel-multi-role-review
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-stock-analysis ~/.agents/skills/v-stock-analysis
@@ -128,6 +135,7 @@ rm -rf ~/.agents/skills/v-neat-freak
 rm -rf ~/.agents/skills/v-novel-anti-ai
 rm -rf ~/.agents/skills/v-novel-build
 rm -rf ~/.agents/skills/v-novel-chaiwen
+rm -rf ~/.agents/skills/v-novel-round-table
 rm -rf ~/.agents/skills/v-novel-write-shuangwen
 rm -rf ~/.agents/skills/v-novel-multi-role-review
 rm -rf ~/.agents/skills/v-stock-analysis
@@ -155,6 +163,7 @@ cp -R /Users/vanilla/git/github/cute-angelia/my-skills/v-neat-freak ~/.agents/sk
 - `~/.agents/skills/v-novel-anti-ai`
 - `~/.agents/skills/v-novel-build`
 - `~/.agents/skills/v-novel-chaiwen`
+- `~/.agents/skills/v-novel-round-table`
 - `~/.agents/skills/v-novel-write-shuangwen`
 - `~/.agents/skills/v-novel-multi-role-review`
 - `~/.agents/skills/v-stock-analysis`
