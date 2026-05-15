@@ -29,8 +29,8 @@
   - 适合在阶段开发完成后，系统整理 memory、CLAUDE/AGENTS、README、docs 与 handoff 文档，确保对人和对 agent 都不漂移
 
 - `v-novel-anti-ai`
-  - 小说反 AI 审查技能
-  - 适合对章节正文、场景段落、人设表达做去 AI 味、去模板化、去解释腔审查；默认先给审查报告，由用户决定是否实改
+  - 小说反 AI 直接实改技能
+  - 适合对章节正文、场景段落、人设表达做去 AI 味、去模板化、去解释腔实改；默认直接修改正文或给可替换成稿，只有用户明确要求只审查时才输出报告
 
 - `v-novel-build`
   - novelOs 三项目分流选择技能
@@ -40,6 +40,10 @@
   - 长篇样文/小说章节结构化拆文 skill
   - 适合按章节连续拆解样本文，稳定输出每章功能、麻烦链、伏笔、地图与可迁移机制，并默认自动续拆不等待“继续”
 
+- `v-novel-fanqie-bestseller-template`
+  - 番茄爆款故事填写模板 skill
+  - 适合从 0 填写爽文/连载故事底盘，先设计局势、利益、立场，再生成剧情、大纲或正文
+
 - `v-novel-round-table`
   - 网文拆文后圆桌会策划 skill
   - 适合让番茄爽文读者、毒舌读者、番茄金番小说家、起点白金作家等角色讨论拆文成果、避撞车并缝合生成新小说大纲
@@ -47,6 +51,14 @@
 - `v-novel-write-shuangwen`
   - 番茄爽文正文直出 skill
   - 适合按“番茄连载口感”直接写爽文开篇、续写、改写、扩写与章节正文
+
+- `v-novel-write-hero`
+  - 网文英雄之旅嵌套齿轮写作 skill
+  - 适合男频快节奏连载的章节设计、弧线规划、卷级衔接、升级螺旋、主线副本与多线收束结构治理
+
+- `v-novel-write-xiuxian`
+  - 通用修仙正文直出 skill
+  - 适合写修仙、仙侠、玄幻仙门、反套路修仙、命数/因果/宗门斗争/天命抗争类章节；未指定时默认男频长篇用第三人称有限视角
 
 - `v-novel-multi-role-review`
   - 多角色网文审查 skill
@@ -87,11 +99,17 @@ my-skills/
 ├── v-novel-chaiwen/
 │   ├── SKILL.md
 │   └── chaiwen/
+├── v-novel-fanqie-bestseller-template/
+│   └── SKILL.md
 ├── v-novel-round-table/
 │   └── SKILL.md
 ├── v-novel-write-shuangwen/
 │   ├── SKILL.md
 │   └── references/
+├── v-novel-write-hero/
+│   └── SKILL.md
+├── v-novel-write-xiuxian/
+│   └── SKILL.md
 ├── v-novel-multi-role-review/
 │   └── SKILL.md
 ├── v-stock-analysis/
@@ -117,8 +135,11 @@ ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-neat-freak ~/.agents/sk
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-anti-ai ~/.agents/skills/v-novel-anti-ai
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-build ~/.agents/skills/v-novel-build
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-chaiwen ~/.agents/skills/v-novel-chaiwen
+ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-fanqie-bestseller-template ~/.agents/skills/v-novel-fanqie-bestseller-template
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-round-table ~/.agents/skills/v-novel-round-table
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-write-shuangwen ~/.agents/skills/v-novel-write-shuangwen
+ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-write-hero ~/.agents/skills/v-novel-write-hero
+ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-write-xiuxian ~/.agents/skills/v-novel-write-xiuxian
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-multi-role-review ~/.agents/skills/v-novel-multi-role-review
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-stock-analysis ~/.agents/skills/v-stock-analysis
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-wechat-article-formatter-skill ~/.agents/skills/v-wechat-article-formatter-skill
@@ -135,8 +156,11 @@ rm -rf ~/.agents/skills/v-neat-freak
 rm -rf ~/.agents/skills/v-novel-anti-ai
 rm -rf ~/.agents/skills/v-novel-build
 rm -rf ~/.agents/skills/v-novel-chaiwen
+rm -rf ~/.agents/skills/v-novel-fanqie-bestseller-template
 rm -rf ~/.agents/skills/v-novel-round-table
 rm -rf ~/.agents/skills/v-novel-write-shuangwen
+rm -rf ~/.agents/skills/v-novel-write-hero
+rm -rf ~/.agents/skills/v-novel-write-xiuxian
 rm -rf ~/.agents/skills/v-novel-multi-role-review
 rm -rf ~/.agents/skills/v-stock-analysis
 rm -rf ~/.agents/skills/v-wechat-article-formatter-skill
@@ -163,8 +187,11 @@ cp -R /Users/vanilla/git/github/cute-angelia/my-skills/v-neat-freak ~/.agents/sk
 - `~/.agents/skills/v-novel-anti-ai`
 - `~/.agents/skills/v-novel-build`
 - `~/.agents/skills/v-novel-chaiwen`
+- `~/.agents/skills/v-novel-fanqie-bestseller-template`
 - `~/.agents/skills/v-novel-round-table`
 - `~/.agents/skills/v-novel-write-shuangwen`
+- `~/.agents/skills/v-novel-write-hero`
+- `~/.agents/skills/v-novel-write-xiuxian`
 - `~/.agents/skills/v-novel-multi-role-review`
 - `~/.agents/skills/v-stock-analysis`
 - `~/.agents/skills/v-wechat-publish`
