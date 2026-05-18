@@ -44,6 +44,10 @@
   - 番茄爆款故事填写模板 skill
   - 适合从 0 填写爽文/连载故事底盘，先设计局势、利益、立场，再生成剧情、大纲或正文
 
+- `v-novel-reversal-foreshadowing`
+  - 网文/短剧通用反转与伏笔找补 skill
+  - 适合长篇网文、番茄连载、短篇和短剧的身份反转、动机反转、认知反转设计与审查，确保反转有伏笔、有动机、能往回找补
+
 - `v-novel-round-table`
   - 网文拆文后圆桌会策划 skill
   - 适合让番茄爽文读者、毒舌读者、番茄金番小说家、起点白金作家等角色讨论拆文成果、避撞车并缝合生成新小说大纲
@@ -101,6 +105,8 @@ my-skills/
 │   └── chaiwen/
 ├── v-novel-fanqie-bestseller-template/
 │   └── SKILL.md
+├── v-novel-reversal-foreshadowing/
+│   └── SKILL.md
 ├── v-novel-round-table/
 │   └── SKILL.md
 ├── v-novel-write-shuangwen/
@@ -136,6 +142,7 @@ ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-anti-ai ~/.agents
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-build ~/.agents/skills/v-novel-build
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-chaiwen ~/.agents/skills/v-novel-chaiwen
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-fanqie-bestseller-template ~/.agents/skills/v-novel-fanqie-bestseller-template
+ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-reversal-foreshadowing ~/.agents/skills/v-novel-reversal-foreshadowing
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-round-table ~/.agents/skills/v-novel-round-table
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-write-shuangwen ~/.agents/skills/v-novel-write-shuangwen
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-write-hero ~/.agents/skills/v-novel-write-hero
@@ -157,6 +164,7 @@ rm -rf ~/.agents/skills/v-novel-anti-ai
 rm -rf ~/.agents/skills/v-novel-build
 rm -rf ~/.agents/skills/v-novel-chaiwen
 rm -rf ~/.agents/skills/v-novel-fanqie-bestseller-template
+rm -rf ~/.agents/skills/v-novel-reversal-foreshadowing
 rm -rf ~/.agents/skills/v-novel-round-table
 rm -rf ~/.agents/skills/v-novel-write-shuangwen
 rm -rf ~/.agents/skills/v-novel-write-hero
@@ -188,6 +196,7 @@ cp -R /Users/vanilla/git/github/cute-angelia/my-skills/v-neat-freak ~/.agents/sk
 - `~/.agents/skills/v-novel-build`
 - `~/.agents/skills/v-novel-chaiwen`
 - `~/.agents/skills/v-novel-fanqie-bestseller-template`
+- `~/.agents/skills/v-novel-reversal-foreshadowing`
 - `~/.agents/skills/v-novel-round-table`
 - `~/.agents/skills/v-novel-write-shuangwen`
 - `~/.agents/skills/v-novel-write-hero`
