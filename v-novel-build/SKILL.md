@@ -11,18 +11,22 @@ description: 在 novelOs 的三个小说项目之间做分流选择并落到对�
 固定项目根目录：
 `/Users/vanilla/git/github/cute-angelia/novelOs`
 
-固定三选一：
+固定项目选项：
 - `open-novel-writing`
+- `lumi-novel-studio`
 - `novel-pro`
 - `webnovel-writer`
 
+`lumi-novel-studio` 是后来新增的 Lumi 写作法融合项目，固定路径：
+`/Users/vanilla/git/github/cute-angelia/novelOs/lumi-novel-studio`
+
 统一反 AI 审查规则：
-- 这三个项目只要涉及“AI 味审查 / 去模板化 / 去解释腔 / 正文反 AI 诊断 / 审查报告”，统一优先使用 `v-novel-anti-ai`
-- 不再为三个项目分别维护多套 AI 审查口径
+- 这些项目只要涉及“AI 味审查 / 去模板化 / 去解释腔 / 正文反 AI 诊断 / 审查报告”，统一优先使用 `v-novel-anti-ai`
+- 不再为每个项目分别维护多套 AI 审查口径
 - 各项目自己的 workflow / checker / review 流程可以继续存在，但凡是“文风 AI 味审查”这一层，统一以 `v-novel-anti-ai` 为主口径
 
-不要把三者混成一个系统。
-它们不是不同名字的同一套东西，而是三个层级不同的方案。
+不要把这些项目混成一个系统。
+它们不是不同名字的同一套东西，而是层级不同的方案。
 
 ## 防串项目规则
 
@@ -195,9 +199,11 @@ description: 在 novelOs 的三个小说项目之间做分流选择并落到对�
 
 ### B3. 继续写下一章
 - 先检查 `故事/同步状态.md`
-- 若仍有待同步章节，不允许直接续写
-- 通过后再执行固定流水线：
-  `Planner -> Composer -> Writer -> Observer -> Settler -> Auditor`
+- 若仍有接管遗留的待同步章节，不允许直接续写
+- 若存在上一章“待锁定草稿章”，先执行 `Observer -> Settler` 锁定并结算上一章
+- 再执行新章草稿流水线：
+  `Planner -> Composer -> Writer -> Auditor`
+- 新章写完后默认只登记为“待锁定草稿章”，不立即写入总账和快照；除非用户明确说“本章定稿 / 直接结算 / 不再修改”
 
 ### B4. 单章审计 / 修订
 - 只处理目标章节
@@ -207,7 +213,7 @@ description: 在 novelOs 的三个小说项目之间做分流选择并落到对�
 执行硬规则：
 - 先看 workflow 再进 agent，不要一上来把全部资料塞满
 - 先事实总账，后快照视图，再更新同步状态
-- 待同步章节未清空时，不要让系统继续写下一章
+- 接管遗留的待同步章节未清空时，不要让系统继续写下一章；正常续写的“待锁定草稿章”不阻断续写，但必须先锁定上一章再规划新章
 - 目标是把长篇写稳，不是图快
 - 如果用户要做“正文 AI 味审查 / 去模板化 / 去解释腔 / 反 AI 审查报告 / 按反 AI 模板修”，统一调用 `v-novel-anti-ai` 作为文风审查主口径，不再单独维护 novel-pro 私有反 AI 审查规则
 

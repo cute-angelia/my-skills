@@ -32,6 +32,14 @@
   - 小说反 AI 直接实改技能
   - 适合对章节正文、场景段落、人设表达做去 AI 味、去模板化、去解释腔实改；默认直接修改正文或给可替换成稿，只有用户明确要求只审查时才输出报告
 
+- `v-novel-anti-ai-only-sentence`
+  - 小说句式生活化提示 skill
+  - 适合只做语言句式、口吻和表达自然度修正提示；不删场景描写，不删说明信息，不做强反 AI 实改，默认只提示可替换句
+
+- `v-novel-对话感情增强`
+  - 小说/短剧对话情绪增强 skill
+  - 适合只针对已有正文里的对话做感情、人味、拉扯、嘴硬、停顿和接话感增强；保留剧情、人物关系、信息点和事件顺序，不做全文润色
+
 - `v-novel-build`
   - novelOs 三项目分流选择技能
   - 适合在 open-novel-writing、novel-pro、webnovel-writer 之间快速选型并进入正确工作流
@@ -43,6 +51,22 @@
 - `v-novel-fanqie-bestseller-template`
   - 番茄爆款故事填写模板 skill
   - 适合从 0 填写爽文/连载故事底盘，先设计局势、利益、立场，再生成剧情、大纲或正文
+
+- `v-novel-大纲排雷清单`
+  - 初大纲番茄短爽文简版排雷 skill
+  - 适合从 0 起短爽文/番茄爽文初始大纲，或检查、完善、排雷已有大纲，重点筛掉水剧情、假冲突、工具人、工业糖精和 AI 说明书味
+
+- `v-novel-新小说开坑总控`
+  - 新小说开坑总控 skill（精简白金版）
+  - 适合先以“白金作家 + 番茄金番作家”双作家会审给 3-5 个原创话题；用户确认后再做开坑孵化、细纲、正文或落盘
+  - 参考原文/样文时只借机制，不沿用原文姓名、书名、资产名、事件链和结局道具
+  - 短篇爽文话题必须给出爽文类型、写作公式、代入身份爽、情感释放爽、三方利益、三方极致性格和主基调情绪，缺一项即不合格
+  - 话题必须是可直接开场的具体点子，不能只是题材名、套路名或抽象情绪；短篇爽文必须先选身份打脸、偏心清算、冒名自爆、退让接盘、惨事清算等具体爽型，并套对应写作公式，不同爽型不能共用同一套打脸公式
+  - 内容禁区：禁止用法律、证据、账单、论文、政府、商业项目、电竞、厨师、酒庄、奇怪商业当核心推进器
+
+- `v-novel-细纲-修仙`
+  - 修仙剧情 3-5 章小阶段推进 skill
+  - 适合接住修仙/仙侠/玄幻仙门文的当前卡点，把设定、卷目标、人物利益和已有伏笔推进成可直接扩写正文的小闭环细纲
 
 - `v-novel-reversal-foreshadowing`
   - 网文/短剧通用反转与伏笔找补 skill
@@ -67,6 +91,14 @@
 - `v-novel-multi-role-review`
   - 多角色网文审查 skill
   - 适合用多个创作/读者/商业化视角联合审查章节、大纲或片段
+
+- `v-novel-镜灵章节审查`
+  - 镜灵章节审查与实改流水线 skill
+  - 适合对章节正文做 v-novel-anti-ai、毒舌读者、番茄爽文金番作家、番茄组与圆桌会多轮审查实改，目标把实稿打到 9.7 分以上
+
+- `小说情绪自检`
+  - 小说/网文/短剧正文的读者情绪自检 skill
+  - 适合检查章节、场景、片段或细纲是否真正让读者产生情绪变化，重点校验“读者情绪 ≠ 角色情绪”、处境代入、真实代价、情绪因果链、紧松节奏、外化动作与结尾未回答问题
 
 - `v-stock-analysis`
   - A 股强势股资金分析技能
@@ -98,12 +130,23 @@ my-skills/
 │   └── references/
 ├── v-novel-anti-ai/
 │   └── SKILL.md
+├── v-novel-anti-ai-only-sentence/
+│   └── SKILL.md
+├── v-novel-对话感情增强/
+│   └── SKILL.md
 ├── v-novel-build/
 │   └── SKILL.md
 ├── v-novel-chaiwen/
 │   ├── SKILL.md
 │   └── chaiwen/
 ├── v-novel-fanqie-bestseller-template/
+│   └── SKILL.md
+├── v-novel-大纲排雷清单/
+│   └── SKILL.md
+├── v-novel-新小说开坑总控/
+│   ├── SKILL.md
+│   └── readme.md
+├── v-novel-细纲-修仙/
 │   └── SKILL.md
 ├── v-novel-reversal-foreshadowing/
 │   └── SKILL.md
@@ -117,6 +160,10 @@ my-skills/
 ├── v-novel-write-xiuxian/
 │   └── SKILL.md
 ├── v-novel-multi-role-review/
+│   └── SKILL.md
+├── v-novel-镜灵章节审查/
+│   └── SKILL.md
+├── 小说情绪自检/
 │   └── SKILL.md
 ├── v-stock-analysis/
 │   └── SKILL.md
@@ -139,15 +186,22 @@ ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-humanizer ~/.agents/ski
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-khazix-writer ~/.agents/skills/v-khazix-writer
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-neat-freak ~/.agents/skills/v-neat-freak
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-anti-ai ~/.agents/skills/v-novel-anti-ai
+ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-anti-ai-only-sentence ~/.agents/skills/v-novel-anti-ai-only-sentence
+ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-对话感情增强 ~/.agents/skills/v-novel-对话感情增强
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-build ~/.agents/skills/v-novel-build
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-chaiwen ~/.agents/skills/v-novel-chaiwen
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-fanqie-bestseller-template ~/.agents/skills/v-novel-fanqie-bestseller-template
+ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-大纲排雷清单 ~/.agents/skills/v-novel-大纲排雷清单
+ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-新小说开坑总控 ~/.agents/skills/v-novel-新小说开坑总控
+ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-细纲-修仙 ~/.agents/skills/v-novel-细纲-修仙
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-reversal-foreshadowing ~/.agents/skills/v-novel-reversal-foreshadowing
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-round-table ~/.agents/skills/v-novel-round-table
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-write-shuangwen ~/.agents/skills/v-novel-write-shuangwen
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-write-hero ~/.agents/skills/v-novel-write-hero
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-write-xiuxian ~/.agents/skills/v-novel-write-xiuxian
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-multi-role-review ~/.agents/skills/v-novel-multi-role-review
+ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-镜灵章节审查 ~/.agents/skills/v-novel-镜灵章节审查
+ln -s /Users/vanilla/git/github/cute-angelia/my-skills/小说情绪自检 ~/.agents/skills/小说情绪自检
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-stock-analysis ~/.agents/skills/v-stock-analysis
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-wechat-article-formatter-skill ~/.agents/skills/v-wechat-article-formatter-skill
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-wechat-publish ~/.agents/skills/v-wechat-publish
@@ -161,15 +215,22 @@ rm -rf ~/.agents/skills/v-humanizer
 rm -rf ~/.agents/skills/v-khazix-writer
 rm -rf ~/.agents/skills/v-neat-freak
 rm -rf ~/.agents/skills/v-novel-anti-ai
+rm -rf ~/.agents/skills/v-novel-anti-ai-only-sentence
+rm -rf ~/.agents/skills/v-novel-对话感情增强
 rm -rf ~/.agents/skills/v-novel-build
 rm -rf ~/.agents/skills/v-novel-chaiwen
 rm -rf ~/.agents/skills/v-novel-fanqie-bestseller-template
+rm -rf ~/.agents/skills/v-novel-大纲排雷清单
+rm -rf ~/.agents/skills/v-novel-新小说开坑总控
+rm -rf ~/.agents/skills/v-novel-细纲-修仙
 rm -rf ~/.agents/skills/v-novel-reversal-foreshadowing
 rm -rf ~/.agents/skills/v-novel-round-table
 rm -rf ~/.agents/skills/v-novel-write-shuangwen
 rm -rf ~/.agents/skills/v-novel-write-hero
 rm -rf ~/.agents/skills/v-novel-write-xiuxian
 rm -rf ~/.agents/skills/v-novel-multi-role-review
+rm -rf ~/.agents/skills/v-novel-镜灵章节审查
+rm -rf ~/.agents/skills/小说情绪自检
 rm -rf ~/.agents/skills/v-stock-analysis
 rm -rf ~/.agents/skills/v-wechat-article-formatter-skill
 rm -rf ~/.agents/skills/v-wechat-publish
@@ -193,20 +254,28 @@ cp -R /Users/vanilla/git/github/cute-angelia/my-skills/v-neat-freak ~/.agents/sk
 - `~/.agents/skills/v-AI-Short-Drama-Agent-Skill`
 - `~/.agents/skills/v-neat-freak`
 - `~/.agents/skills/v-novel-anti-ai`
+- `~/.agents/skills/v-novel-对话感情增强`
 - `~/.agents/skills/v-novel-build`
 - `~/.agents/skills/v-novel-chaiwen`
 - `~/.agents/skills/v-novel-fanqie-bestseller-template`
+- `~/.agents/skills/v-novel-大纲排雷清单`
+- `~/.agents/skills/v-novel-新小说开坑总控`
+- `~/.agents/skills/v-novel-细纲-修仙`
 - `~/.agents/skills/v-novel-reversal-foreshadowing`
 - `~/.agents/skills/v-novel-round-table`
 - `~/.agents/skills/v-novel-write-shuangwen`
 - `~/.agents/skills/v-novel-write-hero`
 - `~/.agents/skills/v-novel-write-xiuxian`
 - `~/.agents/skills/v-novel-multi-role-review`
+- `~/.agents/skills/v-novel-镜灵章节审查`
+- `~/.agents/skills/小说情绪自检`
 - `~/.agents/skills/v-stock-analysis`
 - `~/.agents/skills/v-wechat-publish`
 - `~/.claude/skills/v-neat-freak`
 - `~/.codex/skills/v-neat-freak`
 - `~/.hermes/skills/software-development/v-neat-freak`
+- `~/.hermes/skills/creative/v-novel-大纲排雷清单`
+- `~/.hermes/skills/creative/v-novel-对话感情增强`
 
 它们都指向本仓库对应目录。
 
