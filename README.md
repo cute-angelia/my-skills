@@ -44,6 +44,10 @@
   - novelOs 三项目分流选择技能
   - 适合在 open-novel-writing、novel-pro、webnovel-writer 之间快速选型并进入正确工作流
 
+- `v-novel-凉风有信来`
+  - “凉风有信来”中文小说作者 skill
+  - 适合约稿、命题故事、短篇、章节与续写；强调事件牵引、人物当下选择、动作对白、具体关系成本，以及闭合因果但不解释尽情绪的结尾
+
 - `v-novel-chaiwen`
   - 长篇样文/小说章节结构化拆文 skill
   - 适合按章节连续拆解样本文，稳定输出每章功能、麻烦链、伏笔、地图与可迁移机制，并默认自动续拆不等待“继续”
@@ -96,9 +100,9 @@
   - 镜灵章节审查与实改流水线 skill
   - 适合对章节正文做 v-novel-anti-ai、毒舌读者、番茄爽文金番作家、番茄组与圆桌会多轮审查实改，目标把实稿打到 9.7 分以上
 
-- `小说情绪自检`
-  - 小说/网文/短剧正文的读者情绪自检 skill
-  - 适合检查章节、场景、片段或细纲是否真正让读者产生情绪变化，重点校验“读者情绪 ≠ 角色情绪”、处境代入、真实代价、情绪因果链、紧松节奏、外化动作与结尾未回答问题
+- `v-novel-小说情绪自检`
+  - 小说情绪底层逻辑的写作与检测双模式 skill
+  - 写作时把“在乎物 → 威胁与两难 → 克制/滞后反应 → 行动 → 局势变化”嵌入正文；检测时定位处境、代价、外化、临界点、紧松对比与情绪余波的断链
 
 - `v-stock-analysis`
   - A 股强势股资金分析技能
@@ -136,6 +140,8 @@ my-skills/
 │   └── SKILL.md
 ├── v-novel-build/
 │   └── SKILL.md
+├── v-novel-凉风有信来/
+│   └── SKILL.md
 ├── v-novel-chaiwen/
 │   ├── SKILL.md
 │   └── chaiwen/
@@ -163,7 +169,7 @@ my-skills/
 │   └── SKILL.md
 ├── v-novel-镜灵章节审查/
 │   └── SKILL.md
-├── 小说情绪自检/
+├── v-novel-小说情绪自检/
 │   └── SKILL.md
 ├── v-stock-analysis/
 │   └── SKILL.md
@@ -189,6 +195,7 @@ ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-anti-ai ~/.agents
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-anti-ai-only-sentence ~/.agents/skills/v-novel-anti-ai-only-sentence
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-对话感情增强 ~/.agents/skills/v-novel-对话感情增强
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-build ~/.agents/skills/v-novel-build
+ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-凉风有信来 ~/.agents/skills/v-novel-凉风有信来
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-chaiwen ~/.agents/skills/v-novel-chaiwen
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-fanqie-bestseller-template ~/.agents/skills/v-novel-fanqie-bestseller-template
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-大纲排雷清单 ~/.agents/skills/v-novel-大纲排雷清单
@@ -201,7 +208,7 @@ ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-write-hero ~/.age
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-write-xiuxian ~/.agents/skills/v-novel-write-xiuxian
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-multi-role-review ~/.agents/skills/v-novel-multi-role-review
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-镜灵章节审查 ~/.agents/skills/v-novel-镜灵章节审查
-ln -s /Users/vanilla/git/github/cute-angelia/my-skills/小说情绪自检 ~/.agents/skills/小说情绪自检
+ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-novel-小说情绪自检 ~/.agents/skills/v-novel-小说情绪自检
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-stock-analysis ~/.agents/skills/v-stock-analysis
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-wechat-article-formatter-skill ~/.agents/skills/v-wechat-article-formatter-skill
 ln -s /Users/vanilla/git/github/cute-angelia/my-skills/v-wechat-publish ~/.agents/skills/v-wechat-publish
@@ -218,6 +225,7 @@ rm -rf ~/.agents/skills/v-novel-anti-ai
 rm -rf ~/.agents/skills/v-novel-anti-ai-only-sentence
 rm -rf ~/.agents/skills/v-novel-对话感情增强
 rm -rf ~/.agents/skills/v-novel-build
+rm -rf ~/.agents/skills/v-novel-凉风有信来
 rm -rf ~/.agents/skills/v-novel-chaiwen
 rm -rf ~/.agents/skills/v-novel-fanqie-bestseller-template
 rm -rf ~/.agents/skills/v-novel-大纲排雷清单
@@ -230,7 +238,7 @@ rm -rf ~/.agents/skills/v-novel-write-hero
 rm -rf ~/.agents/skills/v-novel-write-xiuxian
 rm -rf ~/.agents/skills/v-novel-multi-role-review
 rm -rf ~/.agents/skills/v-novel-镜灵章节审查
-rm -rf ~/.agents/skills/小说情绪自检
+rm -rf ~/.agents/skills/v-novel-小说情绪自检
 rm -rf ~/.agents/skills/v-stock-analysis
 rm -rf ~/.agents/skills/v-wechat-article-formatter-skill
 rm -rf ~/.agents/skills/v-wechat-publish
@@ -268,7 +276,7 @@ cp -R /Users/vanilla/git/github/cute-angelia/my-skills/v-neat-freak ~/.agents/sk
 - `~/.agents/skills/v-novel-write-xiuxian`
 - `~/.agents/skills/v-novel-multi-role-review`
 - `~/.agents/skills/v-novel-镜灵章节审查`
-- `~/.agents/skills/小说情绪自检`
+- `~/.agents/skills/v-novel-小说情绪自检`
 - `~/.agents/skills/v-stock-analysis`
 - `~/.agents/skills/v-wechat-publish`
 - `~/.claude/skills/v-neat-freak`
